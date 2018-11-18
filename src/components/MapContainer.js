@@ -2,6 +2,12 @@ import React, { Component} from 'react';
 ;
 
 class MapContainer extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            let markers = []
+        }
+    }
 
     componentDidMount = () => {
         
@@ -14,8 +20,6 @@ class MapContainer extends React.Component {
         
     }
 
- 
-
    
 
     // Initialize and add the map
@@ -23,10 +27,35 @@ class MapContainer extends React.Component {
         // The map, centered at Vienna
         var map = new window.google.maps.Map(
             document.getElementById('map'), {zoom: 14, center: {lat: 48.208418, lng: 16.373231}});
-        // The marker, positioned at Vienna
-        //var marker = new google.maps.Marker({position: vienna, map: map});
         
-        //this.setState({map})
+        
+      
+        
+        for (var i=0 ; this.venues.length > i; i++){
+                marker[i].setMap(map);
+
+            let title= this.venues.location[i].name;
+            let address= this.venues.location[i].address;
+            let postalcode= this.venues.location[i].postalcode;
+            let id= this.venues.categories[i].id
+            // Creating markers on the map
+            //var marker = new google.maps.Marker({position: vienna, map: map});    
+            var marker = new window.google.maps.Marker({
+            position: {lat: this.venues.location.lat, lng: this.venues.location.lng},
+            map: map,
+            title: title,
+            address: address,
+            postalcode: postalcode,
+            id: id
+            });    
+            //Push the marker to the marker array
+            markers.push(marker);
+
+       
+        //marker.setMap(map);
+        };
+        
+
     }
 
     render() {
