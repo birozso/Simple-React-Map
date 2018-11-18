@@ -1,7 +1,16 @@
-.App {
+.app {
   text-align: center;
 }
 
+html, body {
+  height:100%;
+  margin: 0;
+  padding:0;
+}
+
+.h1 {
+  color: '#40eebb';
+}
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 40vmin;
@@ -29,4 +38,17 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.header {
+    background-color: 'white';
+    font: italic bold 12px/30px Georgia, serif;
+}
+.footer {
+   font:  italic bold 8px/16px Georgia, serif;
+}
+
+#map {
+  height: 100vh;
 }
