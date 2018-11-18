@@ -1,14 +1,22 @@
 import React, { Component} from 'react';
+;
 
 class MapContainer extends React.Component {
 
     componentDidMount = () => {
+        
         // Connect the initMap() function within this class to the global window context,
         // so Google Maps can invoke it
         window.initMap = this.initMap;
         // Asynchronously load the Google Maps script, passing in the callback reference
         loadJS('https://maps.googleapis.com/maps/api/js?key=AIzaSyCLVCGUR9jUVe3DkVKspecXg0pCgMK1E1M&callback=initMap')
+        //Get locals
+        
     }
+
+ 
+
+   
 
     // Initialize and add the map
     initMap = () => {
@@ -21,12 +29,9 @@ class MapContainer extends React.Component {
         //this.setState({map})
     }
 
-   
-    
     render() {
         return (
             <div id='map'>
-
             </div>
         )
     }
