@@ -5,34 +5,39 @@ import axios from 'axios';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
+import ListContainer from './components/ListContainer';
 import PropTypes from 'prop-types';
+
 
 //import MapContainer from './components/MapContainer';
 
 
 class App extends Component {
 
-  
+  constructor(props) {
+    super(props);
 
- state = {
-      venues: [], 
-    }
+    this.state = {
+      venues: [],
+      markers: [] 
+    }}
 
 
 componentDidMount = () => {
-  this.getLocals()
+  this.getVenues()
   // Connect the initMap() function within this class to the global window context,
   // so Google Maps can invoke it
   window.initMap = this.initMap;
   // Asynchronously load the Google Maps script, passing in the callback reference
   loadJS('https://maps.googleapis.com/maps/api/js?key=AIzaSyCLVCGUR9jUVe3DkVKspecXg0pCgMK1E1M&callback=initMap')
-  //Get locals
+  
  
 }
 
 
  // Get Venues
- getLocals = () => {
+ 
+ getVenues = () => {
   const endPoint = "https://api.foursquare.com/v2/venues/explore?"
   const parameters = {
     client_id: "FTPQMQKRBNIJJDPKNGWFMUHD3KBP1OIYX0YZ5BU250CILCD4",
@@ -44,20 +49,21 @@ componentDidMount = () => {
   }
 
   axios.get(endPoint + new URLSearchParams(parameters))
-    .then(response => {console.log (response.data.response.groups[0].items)
+    .then(response => {console.log(response.data.response.groups[0].items[0]['venue'])
       this.setState({
         //at search? the value of venues are: venues: response.data.response.venues
-        venues:response.data.response.groups[0].items
+        venues:response.data.response.groups[0].items[0]['venue']
 
-      },  this.initMap()) 
+      },  
+      this.initMap())
       //console.log(response.data.response.venues)
     })
     .catch(error => {
-      console.log("Sorry, there's an ERROR during at axios:-( " + error)
+      console.log("Sorry, there's an ERROR during fetching data:-( " + error)
     })
   }
 
-// Initialize and add the map
+//Initialize and add the map
 initMap = () => {
 
   
@@ -68,7 +74,7 @@ initMap = () => {
         center: {lat: 48.208418, lng: 16.373231}
       });
 
-
+  //Show up the markers
   this.state.venues.map(singleVenue =>{
    
       let marker = new window.google.maps.Marker({
@@ -87,6 +93,7 @@ initMap = () => {
         
         <Header />
         <div id='map'></div>
+        <ListContainer />
         <Footer />
       </div>
     );
