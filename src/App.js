@@ -6,6 +6,7 @@ import axios from 'axios';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ListContainer from './components/ListContainer';
+import ListItem from './components/ListItem';
 import PropTypes from 'prop-types';
 import locals from './data/locals';
 
@@ -20,20 +21,21 @@ class App extends Component {
 
     this.state = {
       venues: [],
-      marker: [] 
+      marker: [],
+      
     }}
 
 
-componentDidMount = () => {
-  this.getLocals();
-  // Connect the initMap() function within this class to the global window context,
-  // so Google Maps can invoke it
-  window.initMap = this.initMap;
-  // Asynchronously load the Google Maps script, passing in the callback reference
-  loadJS('https://maps.googleapis.com/maps/api/js?key=AIzaSyCLVCGUR9jUVe3DkVKspecXg0pCgMK1E1M&callback=initMap')
+  componentDidMount = () => {
+    this.getLocals();
+    // Connect the initMap() function within this class to the global window context,
+    // so Google Maps can invoke it
+    window.initMap = this.initMap;
+    // Asynchronously load the Google Maps script, passing in the callback reference
+    loadJS('https://maps.googleapis.com/maps/api/js?key=AIzaSyCLVCGUR9jUVe3DkVKspecXg0pCgMK1E1M&callback=initMap')
+    
   
- 
-}
+  }
 
 
  // Get data for eating locals
@@ -64,54 +66,63 @@ componentDidMount = () => {
     })
   }
 
-//Initialize and add the map
-initMap = () => {
-
-  
+  //Initialize and add the map
+  initMap = () => {
     // The map, centered at Vienna
-  var map = new window.google.maps.Map(
-      document.getElementById('map'), 
-      {zoom: 14, 
-        center: {lat: 48.208418, lng: 16.373231}
+    var map = new window.google.maps.Map(
+        document.getElementById('map'), 
+        {zoom: 14, 
+          center: {lat: 48.208418, lng: 16.373231}
+        });
+
+    /*Show up the markers BUG: returning undefined
+    this.state.venues.map(singleVenue =>{
+    
+
+        const marker = new window.google.maps.Marker({
+        position: {position},
+        map: map,
+        title:"Hi Dude"
+      })
+      return marker;
+    })*/
+    //Looping through the data file for making markers
+    for (let i = 0; i < locals.length; i++) {
+      
+      let position = locals[i].position;
+      let name = locals[i].name;
+      let id = locals[i].foursquare-id
+
+    //Create the markers on the map
+      let marker = new window.google.maps.Marker({
+        map: map,
+        position: position,
+        title: name,
+        id: id
       });
 
-  /*Show up the markers BUG: returning undefined
-  this.state.venues.map(singleVenue =>{
-   
-
-      const marker = new window.google.maps.Marker({
-      position: {position},
-      map: map,
-      title:"Hi Dude"
-    })
-    return marker;
-  })*/
-  //Looping through the data file for making markers
-  for (let i = 0; i < locals.length; i++) {
-    
-    let position = locals[i].position;
-    let name = locals[i].name;
-    let id = locals[i].foursquare-id
-
-   //Create the markers on the map
-    let marker = new window.google.maps.Marker({
-      map: map,
-      position: position,
-      title: name,
-      id: id
-    });
-
     //markers.push(marker);
-  }
-} 
+    } 
+  } 
 
-  render() {
+  
+
+  render() {  
+    
+    {/*/ Listview of the eating locals
+    const listOfLocals = locals
+    //Making the searched term case insensitive
+    .filter(searchedLocals => {searchedLocals.toLowerCase().includes(locals.name.toLowerCase())}
+
+    //let eatingLocals = this.state.locals.name;
+    */}
     return (
+      
+ 
       <main className = 'app'>
-        
         <Header />
+        <ListContainer listOfLocals={locals.name} />
         <div id='map'></div>
-        <ListContainer />
         <Footer />
       </main>
     );

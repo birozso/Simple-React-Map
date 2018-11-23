@@ -1,0 +1,6 @@
+.footer{
+    display:flex;
+    flex-direction: column;
+    order: 6;
+    font:  italic bold 8px/16px Georgia, serif;
+}

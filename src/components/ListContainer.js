@@ -1,13 +1,13 @@
 import React,{ Component} from 'react';
 import ListItem from './ListItem';
 import SearchPanel from './SearchPanel';
+import './ListContainer.css';
 
 class ListContainer extends React.Component {
     render() {
       return (
         <aside className ="listContainer" >
-            
-            {/*Searchbox: let the content of the ListContainer toggle between Listview and Searchresults;
+            {/*Searchbox: let the content of the ListContainer toggle between Listview and Searchresults; */}
 
                 <ul>
                 <SearchPanel />
@@ -18,7 +18,6 @@ class ListContainer extends React.Component {
                     <ListItem />
                 </li>
             </ul>
-            */}
         </aside>
         );
     }
