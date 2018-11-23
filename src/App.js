@@ -7,6 +7,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import ListContainer from './components/ListContainer';
 import PropTypes from 'prop-types';
+import locals from './data/locals';
 
 
 //import MapContainer from './components/MapContainer';
@@ -19,12 +20,12 @@ class App extends Component {
 
     this.state = {
       venues: [],
-      markers: [] 
+      marker: [] 
     }}
 
 
 componentDidMount = () => {
-  this.getVenues()
+  this.getLocals();
   // Connect the initMap() function within this class to the global window context,
   // so Google Maps can invoke it
   window.initMap = this.initMap;
@@ -35,9 +36,8 @@ componentDidMount = () => {
 }
 
 
- // Get Venues
- 
- getVenues = () => {
+ // Get data for eating locals
+ getLocals = () => {
   const endPoint = "https://api.foursquare.com/v2/venues/explore?"
   const parameters = {
     client_id: "FTPQMQKRBNIJJDPKNGWFMUHD3KBP1OIYX0YZ5BU250CILCD4",
@@ -45,11 +45,12 @@ componentDidMount = () => {
     query: "cafe",
     //ll: "48.208416, 16.37347",
     near: "Vienna",
+    limit: 10,
     v: "20181108"
   }
 
   axios.get(endPoint + new URLSearchParams(parameters))
-    .then(response => {console.log(response.data.response.groups[0].items[0]['venue'])
+    .then(response => {console.log(response.data.response.groups[0])
       this.setState({
         //at search? the value of venues are: venues: response.data.response.venues
         venues:response.data.response.groups[0].items[0]['venue']
@@ -59,7 +60,7 @@ componentDidMount = () => {
       //console.log(response.data.response.venues)
     })
     .catch(error => {
-      console.log("Sorry, there's an ERROR during fetching data:-( " + error)
+      console.log("Sorry, there's an ERROR during fetching data by Foursquare API:-( " + error)
     })
   }
 
@@ -74,33 +75,51 @@ initMap = () => {
         center: {lat: 48.208418, lng: 16.373231}
       });
 
-  //Show up the markers
+  /*Show up the markers BUG: returning undefined
   this.state.venues.map(singleVenue =>{
    
-      let marker = new window.google.maps.Marker({
-      position: {lat: singleVenue.venue.location.lat, lng: singleVenue.venue.location.lng},
+
+      const marker = new window.google.maps.Marker({
+      position: {position},
       map: map,
       title:"Hi Dude"
     })
     return marker;
-  })
-  
+  })*/
+  //Looping through the data file for making markers
+  for (let i = 0; i < locals.length; i++) {
+    
+    let position = locals[i].position;
+    let name = locals[i].name;
+    let id = locals[i].foursquare-id
+
+   //Create the markers on the map
+    let marker = new window.google.maps.Marker({
+      map: map,
+      position: position,
+      title: name,
+      id: id
+    });
+
+    //markers.push(marker);
+  }
 } 
 
   render() {
     return (
-      <div className = 'app'>
+      <main className = 'app'>
         
         <Header />
         <div id='map'></div>
         <ListContainer />
         <Footer />
-      </div>
+      </main>
     );
   }
 }
 
 export default App;
+
 function loadJS(src) {
   var ref = window.document.getElementsByTagName("script")[0];
   var script = window.document.createElement("script");
