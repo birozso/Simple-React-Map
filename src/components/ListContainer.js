@@ -9,15 +9,12 @@ class ListContainer extends React.Component {
         <aside className ="listContainer" >
             {/*Searchbox: let the content of the ListContainer toggle between Listview and Searchresults; */}
 
-                <ul>
-                <SearchPanel />
+                
+                <SearchPanel className="searchPanel"/>
                 {//map through the locals and gives back a filtered list of them
                 }
-                <li>
-                    
-                    <ListItem />
-                </li>
-            </ul>
+                <ListItem />
+                
         </aside>
         );
     }

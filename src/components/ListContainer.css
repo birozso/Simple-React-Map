@@ -1,25 +1,15 @@
 .listContainer{
   background-color: #f5f5f5;
-  display: flex;
-  flex-direction: column;
-  order: 3; 
   padding: 1em;
   height: 3em;
   z-index: 0;
   width: 40%;
 }
 
-.listContainer ul{
-  padding-left: 1em;
-  padding-right: 1em;
-}
-
-.listContainer li{
-  display: block;
-}
-
 .searchPanel{
-    display: inline-block;
-    order: 4;
-
+  display: inline-block;
+  padding: 1em;
+  height: 3em;
+  z-index: 0;
+  width: 40%;
 }

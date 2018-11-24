@@ -50,10 +50,10 @@ class App extends Component {
     limit: 10,
     v: "20181108"
   }
-
+  //Fetching Foursquare data
   axios.get(endPoint + new URLSearchParams(parameters))
     .then(response => {console.log(response.data.response.groups[0])
-      this.setState({
+      this.setState({ //BUG:gives back undefined 
         //at search? the value of venues are: venues: response.data.response.venues
         venues:response.data.response.groups[0].items[0]['venue']
 
@@ -65,11 +65,12 @@ class App extends Component {
       console.log("Sorry, there's an ERROR during fetching data by Foursquare API:-( " + error)
     })
   }
+  
 
   //Initialize and add the map
   initMap = () => {
     // The map, centered at Vienna
-    var map = new window.google.maps.Map(
+    const map = new window.google.maps.Map(
         document.getElementById('map'), 
         {zoom: 14, 
           center: {lat: 48.208418, lng: 16.373231}
@@ -86,48 +87,49 @@ class App extends Component {
       })
       return marker;
     })*/
+
     //Looping through the data file for making markers
     for (let i = 0; i < locals.length; i++) {
       
       let position = locals[i].position;
       let name = locals[i].name;
-      let id = locals[i].foursquare-id
+      let id = locals[i].foursquare-id;
 
-    //Create the markers on the map
+      //Create the markers on the map
       let marker = new window.google.maps.Marker({
         map: map,
         position: position,
         title: name,
         id: id
+       
       });
 
-    //markers.push(marker);
-    } 
-  } 
+      //Create infowindow BUG:doesn't work
+      let contentString = '${locals[i].name}';
 
-  
+      let infowindow = new window.google.maps.InfoWindow({
+      content: contentString
+     });
+      //Open infowindow BUG:doesn't work
+      marker.addListener('click', function() {
+      infowindow.open(map, marker);
+      })
+    }}
 
   render() {  
     
-    {/*/ Listview of the eating locals
-    const listOfLocals = locals
-    //Making the searched term case insensitive
-    .filter(searchedLocals => {searchedLocals.toLowerCase().includes(locals.name.toLowerCase())}
-
-    //let eatingLocals = this.state.locals.name;
-    */}
+    
     return (
-      
- 
       <main className = 'app'>
         <Header />
-        <ListContainer listOfLocals={locals.name} />
+        <ListContainer />
         <div id='map'></div>
         <Footer />
       </main>
     );
   }
 }
+
 
 export default App;
 
