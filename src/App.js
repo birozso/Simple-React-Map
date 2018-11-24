@@ -116,13 +116,17 @@ class App extends Component {
       })
     }}
 
+    
+
+
   render() {  
     
     
     return (
       <main className = 'app'>
         <Header />
-        <ListContainer />
+        <ListContainer 
+        />
         <div id='map'></div>
         <Footer />
       </main>

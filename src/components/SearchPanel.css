@@ -1,0 +1,12 @@
+.searchPanel{
+    display: inline-block;
+    padding: 1em;
+    height: 3em;
+    z-index: 0;
+    width: 40%;
+  }
+
+  .list-button{
+    position: absolute;
+    left:0px; 
+  }
