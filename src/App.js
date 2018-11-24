@@ -6,7 +6,6 @@ import axios from 'axios';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ListContainer from './components/ListContainer';
-import ListItem from './components/ListItem';
 import PropTypes from 'prop-types';
 import locals from './data/locals';
 
