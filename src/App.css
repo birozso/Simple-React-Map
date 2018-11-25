@@ -1,3 +1,6 @@
+
+/*colorsheme:https://www.color-hex.com/
+*/
 .app {
   text-align: center;
 
@@ -9,8 +12,11 @@ html, body {
   padding:0;
 }
 
-.h1 {
-  color: '#40eebb';
+.h1, h2 {
+  color:#eeeeee ;
+  background-color: #0e2f44;
+  margin:0;
+  
 }
 
 
@@ -19,7 +25,7 @@ html, body {
 
 #map {
   height: 100vh;
-  width: 60%;
+  width: 100%;
   right: 0;
   transition: left 0.5s;
   position: absolute;
@@ -28,7 +34,12 @@ html, body {
 }
 
 
-
+@media (max-width: 450px) {
+  .App .ListContainer {
+      width: 95vw;
+      max-width: 95vw;
+  }
+}
 
 
 

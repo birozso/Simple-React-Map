@@ -1,78 +1,78 @@
 import React,{ Component} from 'react';
-import ListItem from './ListItem';
+//import ListItem from './ListItem';
 import './ListContainer.css';
 import locals from '../data/locals.json';
-
+import PropTypes from 'prop-types';
 import escapeRegExp from 'escape-string-regexp';
 
 
 class ListContainer extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            value: '',
-            fullLocalsListVisible: true,
-            //filtLocals: ''
-
+   
+        state = {
+            query:''
         };
-    
-
-        this.udpateQuery = this.udpateQuery.bind(this);
         
+    udpateQuery = (query) => {
+        this.setState({query: query.trim()})
     }
-
-    udpateQuery(event) {
-        this.setState({value: event.target.value});
-
-        if (this.value ===''){
-            this.setState({fullLocalsListVisible: true})
-        }else{
-            this.handleShowLocals(this.query);
-        }
-    }
-
-    handleShowLocals = (query) => {
-        if (this.query) {
-            const match = new RegExp(escapeRegExp(query), 'i');
-
-           let filteredLocals = this.locals.filter(location => 
-                match.test(location.name))
-            
-            this.setState({
-                filteredLocals: filteredLocals
-            })
-
-
-        }else{
-            this.setState({
-                filteredLocals: locals
-            })
-        }
-
-    }   
-    
-
-
+ 
+    clearQuery = () => {
+        this.setState({ query: '' })
+      }
 
     render() {
-      return (
-        <aside className ="listContainer" >
-            {/*Searchbox: let the content of the ListContainer toggle between Listview and Searchresults; */}
-  
+    let showingListOfLocals ;
+    let query;
+    
+    
+        if (query) {
+            const match = new RegExp(escapeRegExp(query), 'i');
 
-                    <form className= "searchPanel">
-                        <input className="input-field" type="text" value={this.state.value} onChange={this.udpateQuery}  placeholder="Search for café" 
-                        />
-                        <button
-                            className="list-button"
-                            //onClick={}
-                        >List
-                        </button>
-                    </form>
-                   <ListItem />
+           showingListOfLocals = this.locals.filter((local) => 
+                match.test(local.name));
+               
+        }else{
+            console.log("No such cafes");
+            showingListOfLocals = locals;
+        }
+  
+        
+    return (
+        <aside className ="listContainer" >
+            <form >
+                <input 
+                    className="input-field" 
+                    type="text" 
+                    value={this.state.query} 
+                    onChange={event => this.udpateQuery(event.target.value)}  
+                    placeholder="Search for café..." 
+                />
+                <button
+                    className="list-button"
+                    //onClick={}
+                >
+                List
+                </button>
+                    
+                <ol>
+                    {showingListOfLocals.map((singleLocal)  => 
+                        <li className= "li" key={singleLocal.foursquareId}>
+                            {singleLocal.name}
+                            
+                        </li>)} 
+                </ol>
+            </form>
+            {/*<ListItem />*/}
         </aside>
         );
     }
   }
 
 export default ListContainer;
+
+
+ListContainer.propTypes = {
+    locals: PropTypes.array.isRequired,
+    showingListOfLocals: PropTypes.array.isRequired
+   
+}

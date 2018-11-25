@@ -6,10 +6,10 @@ class ListItem extends React.Component {
     render() {
       // Listview of the eating locals
       const localListItems = locals.map((singleLocal) => <li className= "il" key={singleLocal.foursquareId}>{singleLocal.name}</li>);
-    
       return (
         <div className="listItem">
           {localListItems}
+          
         </div>)
     }
   }
