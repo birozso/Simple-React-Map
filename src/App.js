@@ -26,7 +26,7 @@ class App extends Component {
 
 
   componentDidMount = () => {
-    this.getLocals();
+    //this.getLocals();
     // Connect the initMap() function within this class to the global window context,
     // so Google Maps can invoke it
     window.initMap = this.initMap;
@@ -37,7 +37,7 @@ class App extends Component {
   }
 
 
- // Get data for eating locals
+ /*/ Get data for eating locals
  getLocals = () => {
   const endPoint = "https://api.foursquare.com/v2/venues/explore?"
   const parameters = {
@@ -64,7 +64,7 @@ class App extends Component {
       console.log("Sorry, there's an ERROR during fetching data by Foursquare API:-( " + error)
     })
   }
-  
+*/
 
   //Initialize and add the map
   initMap = () => {
