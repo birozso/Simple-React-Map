@@ -21,11 +21,12 @@ class App extends Component {
     this.state = {
       venues: [],
       marker: [],
-      
+      }
+    };    
    
 
      
-}};
+
 
   componentDidMount = () => {
     //this.getLocals();
@@ -77,21 +78,33 @@ class App extends Component {
           center: {lat: 48.208418, lng: 16.373231}
         });
 
-    /*Show up the markers BUG: returning undefined
-    this.state.venues.map(singleVenue =>{
-    
-
-        const marker = new window.google.maps.Marker({
-        position: {position},
+      //Show up the markers
+      locals.map(singleVenue =>{  
+        let marker = new window.google.maps.Marker({
+        position: singleVenue.position,
         map: map,
-        title:"Hi Dude"
+        title: singleVenue.name
       })
-      return marker;
-    })*/
-
-    //Looping through the data file for making markers
-    for (let i = 0; i < locals.length; i++) {
+      //Open infowindow BUG:doesn't work
+      marker.addListener('click', function() {
+      infowindow.open(map, marker);
+      });
+    
+  
+      let infowindow = new window.google.maps.InfoWindow({
+      content: contentString
+     });
+     
+     //Create infowindow BUG:doesn't work
+      let contentString = '<div className="contentInfoWindow">'+
+      '<h1 className="firstHeading">Cafe in Vienna</h1>'+
+      '<div id="bodyContent">'+
+      '<p><b>Some more info</b></p>'+
+      '</div>'+'</div>';
       
+      /*/Looping through the data file for making markers
+        for (let i = 0; i < locals.length; i++) {
+          
       let position = locals[i].position;
       let name = locals[i].name;
       let id = locals[i].foursquareId;
@@ -104,31 +117,12 @@ class App extends Component {
         id:id
        
       });
-
-      let infowindow = new window.google.maps.InfoWindow({
-      content: contentString
-     });
+      */
+    })
      
-     //Open infowindow BUG:doesn't work
-      marker.addListener('click', function() {
-      infowindow.open(map, marker);
-      });
-     
-     
-     //Create infowindow BUG:doesn't work
-      let contentString = '<div className="contentInfoWindow">'+
-      '<h1 className="firstHeading">Cafe in Vienna</h1>'+
-      '<div id="bodyContent">'+
-      '<p><b>Some more info</b></p>'+
-      '</div>'+'</div>';
+  } 
 
-      
-
-      
-    }
-  }
-
-   
+ 
 
 
   render() {  
@@ -137,9 +131,8 @@ class App extends Component {
     return (
       <main className = 'app'>
         <Header />
-        <ListContainer
-            locals = {this.state.locals}        />
-        <div id='map'></div>
+        <ListContainer />
+            <div id='map'></div>
         <Footer />
       </main>
     );

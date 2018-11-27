@@ -2,7 +2,7 @@ export default[
     {
         foursquareId: "4b058890f964a520afcd22e3",
         name:"Café Central",
-        position: { "lat": 48.21034849634383, "lng": 16.36539101600647},
+        position: { lat: 48.21034849634383, lng: 16.36539101600647},
         address: "Herrengasse 14 (Strauchg.)",
         postalcode: "1010 Vienna"
     },
