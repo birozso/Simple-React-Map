@@ -7,7 +7,7 @@
 * Dependencies
 * File Structure
 * Run the Project
-* Bugs
+* Useful Links
 
 ## Project
 
@@ -30,4 +30,6 @@ The application shows a few interesting  **locations in Vienna (Austria)**
  3.  Run  `npm start`
  4.  Navigate to **localhost:3000** in your favorite browser
 
-## Bugs
+## Useful Links
+
+-[How to fetch data in React by robinwieruch](https://www.robinwieruch.de/react-fetching-data/#react-how-fetch-data)

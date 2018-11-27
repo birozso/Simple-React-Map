@@ -7,7 +7,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import ListContainer from './components/ListContainer';
 import PropTypes from 'prop-types';
-import locals from './data/locals';
+import locals from './data/locals.js';
 
 
 //import MapContainer from './components/MapContainer';
@@ -22,8 +22,10 @@ class App extends Component {
       venues: [],
       marker: [],
       
-    }}
+   
 
+     
+}};
 
   componentDidMount = () => {
     //this.getLocals();
@@ -92,30 +94,41 @@ class App extends Component {
       
       let position = locals[i].position;
       let name = locals[i].name;
-      let id = locals[i].foursquare-id;
+      let id = locals[i].foursquareId;
 
       //Create the markers on the map
       let marker = new window.google.maps.Marker({
         map: map,
         position: position,
         title: name,
-        id: id
+        id:id
        
       });
-
-      //Create infowindow BUG:doesn't work
-      let contentString = '${locals[i].name}';
 
       let infowindow = new window.google.maps.InfoWindow({
       content: contentString
      });
-      //Open infowindow BUG:doesn't work
+     
+     //Open infowindow BUG:doesn't work
       marker.addListener('click', function() {
       infowindow.open(map, marker);
-      })
-    }}
+      });
+     
+     
+     //Create infowindow BUG:doesn't work
+      let contentString = '<div className="contentInfoWindow">'+
+      '<h1 className="firstHeading">Cafe in Vienna</h1>'+
+      '<div id="bodyContent">'+
+      '<p><b>Some more info</b></p>'+
+      '</div>'+'</div>';
 
-    
+      
+
+      
+    }
+  }
+
+   
 
 
   render() {  
@@ -124,14 +137,14 @@ class App extends Component {
     return (
       <main className = 'app'>
         <Header />
-        <ListContainer 
-        />
+        <ListContainer
+            locals = {this.state.locals}        />
         <div id='map'></div>
         <Footer />
       </main>
     );
   }
-}
+} 
 
 
 export default App;
@@ -149,5 +162,5 @@ function loadJS(src) {
 
 
 App.propTypes = {
-  venues: PropTypes.array.isRequired
+  //venues: PropTypes.array.isRequired
 }

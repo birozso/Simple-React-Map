@@ -1,7 +1,8 @@
 import React,{ Component} from 'react';
 //import ListItem from './ListItem';
 import './ListContainer.css';
-import locals from '../data/locals.json';
+//import locals from '../data/locals.json';
+import locals from '../data/locals.js';
 import PropTypes from 'prop-types';
 import escapeRegExp from 'escape-string-regexp';
 
@@ -11,7 +12,7 @@ class ListContainer extends React.Component {
         state = {
             query:''
         };
-        
+
     udpateQuery = (query) => {
         this.setState({query: query.trim()})
     }
@@ -24,11 +25,10 @@ class ListContainer extends React.Component {
     let showingListOfLocals ;
     let query;
     
-    
         if (query) {
             const match = new RegExp(escapeRegExp(query), 'i');
 
-           showingListOfLocals = this.locals.filter((local) => 
+           showingListOfLocals = locals.filter((local) => 
                 match.test(local.name));
                
         }else{
@@ -59,7 +59,7 @@ class ListContainer extends React.Component {
                         <li className= "li" key={singleLocal.foursquareId}>
                             {singleLocal.name}
                             
-                        </li>)} 
+                    </li>)} 
                 </ol>
             </form>
             {/*<ListItem />*/}
